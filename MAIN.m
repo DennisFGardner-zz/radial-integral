@@ -17,4 +17,8 @@ I(I>=200) = 0;
 I(I>0) = 1;
 figure; imagesc(I); axis image;
 
+%% Radiall integrate the circle
+
+[ r, z ] = radI( I );
+
 
