@@ -21,4 +21,23 @@ figure; imagesc(I); axis image;
 
 [ r, z ] = radI( I );
 
+%% Testing
+
+
+% array dimensions [rows, cols]
+[M, N] = size(I);
+
+% grid vectors (cartesian)
+x = -N/2:N/2-1;
+y = -M/2:M/2-1;
+
+% grid array (cartesian)
+[X , Y] = meshgrid(x, y);
+
+[theta,rho] = cart2pol(X,Y);
+
+clear M N x y X Y
+[rAvg,yAvg,rStd,yStd,r,y] = rscan2(I,rho, 120);
+
+%%
 

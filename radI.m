@@ -34,7 +34,17 @@ function [ r, z ] = radI( I )
 
 %------------- BEGIN CODE --------------
 
-% Enter your executable matlab commands here
+% array dimensions [rows, cols]
+[M, N] = size(I);
+
+% grid vectors (cartesian)
+x = -N/2:N/2-1;
+y = -M/2:M/2-1;
+
+% grid array (cartesian)
+[X , Y] = meshgrid(x, y);
+
+[theta,rho] = cart2pol(x,y);
 
 
 %------------- END OF CODE --------------
