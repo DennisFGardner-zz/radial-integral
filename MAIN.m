@@ -9,6 +9,7 @@
 
 
 %% Open the circle image
+close all; clearvars; clc;
 
 I = imread('circle.jpg');
 I = double(I);
@@ -17,9 +18,20 @@ I(I>=200) = 0;
 I(I>0) = 1;
 figure; imagesc(I); axis image;
 
+%% open the bullseye image
+close all; clearvars; clc;
+
+I = imread('bullseye.png');
+I = double(I);
+I = mean(I,3);
+I(I<=200) = NaN;
+I(I>0) = 1;
+figure; imagesc(I); axis image;
 %% Radiall integrate the circle
 
 [ r, z ] = radI( I );
+
+plot(r, z, '.');
 
 %% Testing
 
