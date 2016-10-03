@@ -8,4 +8,13 @@
 % File Creation: Oct. 3rd, 2016
 
 
-%% 
+%% Open the circle image
+
+I = imread('circle.jpg');
+I = double(I);
+I = mean(I,3);
+I(I>=200) = 0;
+I(I>0) = 1;
+figure; imagesc(I); axis image;
+
+
