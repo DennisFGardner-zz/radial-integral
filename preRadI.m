@@ -1,18 +1,21 @@
-function [ ind ] = preRadI( I )
-%PRERADI Summary of this function goes here
-%   From the center of the 2D array, I, radially integrate outwards. This
-%   function is capable of handling an I with NaN elements. 
+function [r, ind] = preRadI( I )
+%PRERADI initialize variables (r & ind) for the radial integral function
+%   To speed up the radial integral function, radI, this function
+%   initializes the nessescary variables: r & ind. 
 %
-% Syntax:  [output1,output2] = function_name(input1,input2,input3)
+%   An cartesian grid is created with the same dimensions as the input
+%   image, I. The grid is converted to polor coordinates and the rho values
+%   are sorted. The output of the sort function is the output of this
+%   function. 
+%
+% Syntax:  [r, ind] = preRadI(I);
 %
 % Inputs:
-%    input1 - Description
-%    input2 - Description
-%    input3 - Description
+%    I - 2D array - image or diffraction
 %
 % Outputs:
-%    output1 - Description
-%    output2 - Description
+%    r - 1D arry - distance from the center of I
+%    ind - 1D array - index for I in increasing radial order
 %
 % Example: 
 %    Line 1 of example
@@ -23,16 +26,32 @@ function [ ind ] = preRadI( I )
 % Subfunctions: none
 % MAT-files required: none
 %
-% See also: OTHER_FUNCTION_NAME1,  OTHER_FUNCTION_NAME2
+% See also: RADI,  OTHER_FUNCTION_NAME2
 
 % Author: Dennis F Gardner
 % JILA, Univeristy of Colorado, 440 UCB, Boulder, CO 80309
 % email: dennis.gardner@colorado.edu
 % Website 1: http://www.github.com/DennisFGardner 
 % Website 2: http://www.linkedin.com/in/dennisfgardner
-% File Creation: Sept. 14th, 2016
+% File Creation: Oct. 4th, 2016
 
 %------------- BEGIN CODE --------------
+
+% array dimensions [rows, cols]
+[M, N] = size(I);
+
+% grid vectors (cartesian)
+x = -N/2:N/2-1;
+y = -M/2:M/2-1;
+
+% grid array (cartesian)
+[X , Y] = meshgrid(x, y);
+
+% polor coordinates (rho has dims M x N)
+[~,rho] = cart2pol(X,Y);
+
+% sorts rho into ascending order, ind is the index
+[r, ind] = sort(rho(:));
 
 %------------- END OF CODE --------------
 end
