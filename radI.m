@@ -34,21 +34,6 @@ function [ r, z ] = radI( I )
 
 %------------- BEGIN CODE --------------
 
-% array dimensions [rows, cols]
-[M, N] = size(I);
-
-% grid vectors (cartesian)
-x = -N/2:N/2-1;
-y = -M/2:M/2-1;
-
-% grid array (cartesian)
-[X , Y] = meshgrid(x, y);
-
-% polor coordinates (rho has dims M x N)
-[~,rho] = cart2pol(X,Y);
-
-% sorts rho into ascending order, ind is the index
-[r, ind] = sort(rho(:));
 
 % sorts the values of the image in the same order as rho
 z = I(ind);
