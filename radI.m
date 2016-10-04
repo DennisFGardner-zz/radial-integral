@@ -1,9 +1,16 @@
-function [ r, z ] = radI( I )
-%RADI - radially integrate the 2D array I
+function [ rMean, zMean ] = radI(r, ind, I, N)
+%RADI - radially integrate the 2D array into N partitions
 %   From the center of the 2D array, I, radially integrate outwards. This
-%   function is capable of handling an I with NaN elements. 
+%   function is capable of handling an array with NaN elements.
 %
-% Syntax:  [output1,output2] = function_name(input1,input2,input3)
+%   The two variables for this funtion, r & ind, are initialized by another
+%   function called preRadI. This was done to speed up this function
+%   becasue this function, in my analysis, is used within a for loop and is
+%   called hundreds of times. 
+%
+% Syntax:  [ rMean, zMean ] = radI(r, ind, I) 
+%              or 
+%          [ rMean, zMean ] = radI(r, ind, I, N);
 %
 % Inputs:
 %    input1 - Description
@@ -23,20 +30,20 @@ function [ r, z ] = radI( I )
 % Subfunctions: none
 % MAT-files required: none
 %
-% See also: OTHER_FUNCTION_NAME1,  OTHER_FUNCTION_NAME2
+% See also: preRadI,  OTHER_FUNCTION_NAME2
 
 % Author: Dennis F Gardner
 % JILA, Univeristy of Colorado, 440 UCB, Boulder, CO 80309
 % email: dennis.gardner@colorado.edu
 % Website 1: http://www.github.com/DennisFGardner 
 % Website 2: http://www.linkedin.com/in/dennisfgardner
-% File Creation: Sept. 14th, 2016
+% File Creation: Oct. 3rd, 2016
 
 %------------- BEGIN CODE --------------
 
 
 % sorts the values of the image in the same order as rho
-z = I(ind);
+zMean = I(ind);
 
 
 %------------- END OF CODE --------------
