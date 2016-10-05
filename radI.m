@@ -8,18 +8,23 @@ function [ rMean, zMean ] = radI(r, ind, I, N)
 %   becasue this function, in my analysis, is used within a for loop and is
 %   called hundreds of times. 
 %
+%   This function is largely based on Narupon Chattrapiban's code posted in
+%   the comments of Radial Scan at: 
+%   https://www.mathworks.com/matlabcentral/fileexchange/18102-radial-scan
+% 
 % Syntax:  [ rMean, zMean ] = radI(r, ind, I) 
 %              or 
 %          [ rMean, zMean ] = radI(r, ind, I, N);
 %
 % Inputs:
-%    input1 - Description
-%    input2 - Description
-%    input3 - Description
+%    r - 1D array - distance from the center of I (from preRadI)
+%    ind - 1D array - index for I in increasing radial order (from preRadI)
+%    I - 2D array - image (or diffraction) to be radially integrated
+%    N - numbmer - divide integral into N sections, default N = rows * cols
 %
 % Outputs:
-%    output1 - Description
-%    output2 - Description
+%    rMean - 1D vector - the average value of r in the section
+%    zMean - 1D vector - average value of image at the given r values
 %
 % Example: 
 %    Line 1 of example
@@ -31,6 +36,10 @@ function [ rMean, zMean ] = radI(r, ind, I, N)
 % MAT-files required: none
 %
 % See also: preRadI,  OTHER_FUNCTION_NAME2
+%
+% Notes: The N breaks up the integral into N parts. Each part has the same
+% number of pixels equal to NumberOfElments/N . This function is fast, but
+% it's not radially integrating with a fixed delta r. 
 
 % Author: Dennis F Gardner
 % JILA, Univeristy of Colorado, 440 UCB, Boulder, CO 80309
