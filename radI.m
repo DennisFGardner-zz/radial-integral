@@ -57,12 +57,12 @@ z = I(ind);
 
 % default value of N if not given, N = rows * cols
 if nargin < 4, 
-    N = numel(rh); 
+    N = numel(I); 
 end
 
 % N mush be less than the number of elements
-if N > numel(rh), 
-    N = numel(rh); 
+if N > numel(I), 
+    N = numel(I); 
 end
 
 
@@ -74,9 +74,10 @@ Nelements = numel(I);
 if N < Nelements
     % from N, calculate number of pixel in each section. Round down to ensure
     % there are enough pixels for each section. 
-    pixelsPerSection = floor(numel(rh)/N);
+    pixelsPerSection = floor(Nelements/N);
 
     % due to rounding down, there may be left over pixels not used
+    % redefine the number of elements
     Nelements = pixelsPerSection*N; 
 
     % there may be extra pixels, get rid of them
@@ -85,12 +86,12 @@ if N < Nelements
     
     % reshape the linear vector, so each col has pixelsPerSecion and ther
     % are Nelement colums
-    rMean = mean(reshape(r,pixelsPerSection,Nelements),1); 
-    zMean = mean(reshape(z,pixelsPerSection,Nelements),1); 
+    rMean = nanmean(reshape(r,pixelsPerSection,N),1); 
+    zMean = nanmean(reshape(z,pixelsPerSection,N),1); 
     
 elseif N == Nelements
     zMean = z;
-    rMean = z;
+    rMean = r;
 end
 
 

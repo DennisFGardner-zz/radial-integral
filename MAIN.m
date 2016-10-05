@@ -30,10 +30,11 @@ figure; imagesc(I); axis image;
 %% Radiall integrate the circle
 
 [r, ind] = preRadI(I);
-[ rMean, zMean ] = radI(r, ind, I);
+[ rMean, zMean ] = radI(r, ind, I, 170);
 
-plot(r, z, '.');
+plot(rMean, zMean, '.');
 
+clear r ind
 %% Testing
 
 
