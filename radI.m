@@ -39,7 +39,9 @@ function [ rMean, zMean ] = radI(r, ind, I, N)
 %
 % Notes: The N breaks up the integral into N parts. Each part has the same
 % number of pixels equal to NumberOfElments/N . This function is fast, but
-% it's not radially integrating with a fixed delta r. 
+% it's not radially integrating with a fixed delta r. The number of
+% sections cannot excede the number of elements in the array, I. If it
+% does excede, then it's set to number of elements. 
 
 % Author: Dennis F Gardner
 % JILA, Univeristy of Colorado, 440 UCB, Boulder, CO 80309
@@ -50,9 +52,47 @@ function [ rMean, zMean ] = radI(r, ind, I, N)
 
 %------------- BEGIN CODE --------------
 
+% sorts the values of the image in radially increasing order
+z = I(ind);
 
-% sorts the values of the image in the same order as rho
-zMean = I(ind);
+% default value of N if not given, N = rows * cols
+if nargin < 4, 
+    N = numel(rh); 
+end
+
+% N mush be less than the number of elements
+if N > numel(rh), 
+    N = numel(rh); 
+end
+
+
+% number of elements in I
+Nelements = numel(I);
+
+% if the number of section is less than the number of elements, then some
+% average needs to be done. Otherwise, nothing  and define outputs. 
+if N < Nelements
+    % from N, calculate number of pixel in each section. Round down to ensure
+    % there are enough pixels for each section. 
+    pixelsPerSection = floor(numel(rh)/N);
+
+    % due to rounding down, there may be left over pixels not used
+    Nelements = pixelsPerSection*N; 
+
+    % there may be extra pixels, get rid of them
+    r(Nelements+1:end) = []; 
+    z(Nelements+1:end) = [];
+    
+    % reshape the linear vector, so each col has pixelsPerSecion and ther
+    % are Nelement colums
+    rMean = mean(reshape(r,pixelsPerSection,Nelements),1); 
+    zMean = mean(reshape(z,pixelsPerSection,Nelements),1); 
+    
+elseif N == Nelements
+    zMean = z;
+    rMean = z;
+end
+
 
 
 %------------- END OF CODE --------------
