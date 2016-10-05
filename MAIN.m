@@ -29,7 +29,8 @@ I(I>0) = 1;
 figure; imagesc(I); axis image;
 %% Radiall integrate the circle
 
-[ r, z ] = radI( I );
+[r, ind] = preRadI(I);
+[ rMean, zMean ] = radI(r, ind, I);
 
 plot(r, z, '.');
 
